@@ -6,7 +6,14 @@
 import scrapy
 
 
-class AmazonItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
-    pass
+class ProductItem(scrapy.Item):
+    keyword = scrapy.Field()
+    asin = scrapy.Field()
+    url = scrapy.Field()
+    ad = scrapy.Field()
+    title = scrapy.Field()
+    src_price = scrapy.Field()
+    now_price = scrapy.Field()
+    rating = scrapy.Field()
+    rating_count = scrapy.Field()
+    thumbnail_url = scrapy.Field()

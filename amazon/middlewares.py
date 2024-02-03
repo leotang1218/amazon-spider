@@ -101,3 +101,10 @@ class AmazonDownloaderMiddleware:
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+
+class ProxyMiddleware(object):
+    def process_request(self, request, spider):
+        proxy = "http://127.0.0.1:7890"
+        request.meta["proxy"] = proxy
+        spider.logger.info(f'using proxy：{proxy}')
