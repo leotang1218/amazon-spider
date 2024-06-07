@@ -38,4 +38,7 @@ ITEM_PIPELINES = {
 }
 
 # Max Concurrency On ScrapeOps Proxy Free Plan is 1 thread
-CONCURRENT_REQUESTS = 1
+CONCURRENT_REQUESTS = 1  # 全局并发请求数
+CONCURRENT_REQUESTS_PER_DOMAIN = 1  # 每个域名的并发请求数
+
+DOWNLOAD_DELAY = 10  # 每个请求之间等待2秒

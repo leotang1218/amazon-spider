@@ -4,11 +4,11 @@ from urllib.parse import urljoin
 import re
 
 class AmazonSearchProductSpider(scrapy.Spider):
-    name = "amazon_search_product"
+    name = "amazon_search_detail"
 
     custom_settings = {
         'FEEDS': { 'data/%(name)s_%(time)s.csv': { 'format': 'csv',}}
-        }
+    }
 
     def start_requests(self):
         keyword_list = ['ipad']

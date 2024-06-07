@@ -6,8 +6,12 @@
 
 # useful for handling different item types with a single interface
 import csv
+import os
+
 from itemadapter import ItemAdapter
 from scrapy.utils.log import logger
+
+from amazon.utils import now_ts
 
 
 class Save2CsvPipeline:
@@ -20,16 +24,22 @@ class Save2CsvPipeline:
 
     def open_spider(self, spider):
         # 处理spider2的逻辑
-        logger.info(f"spider: {spider}")
-        self.file = open(f'data/{spider.name}.csv', 'a+', encoding='utf8')
-        fields = ['keyword', 'asin', 'url', 'ad', 'title', 'src_price', 'now_price',
-                  'rating', 'rating_count', 'thumbnail_url']
+        ts = now_ts()
+        directory = './data'
+        os.makedirs(directory, exist_ok=True)
+
+        f_path = os.path.join(directory, f'{spider.keyword}-{ts}.csv')
+        logger.info(f"save to file: {f_path}")
+        # newline='' 避免每行都写多一行空行
+        self.file = open(f_path, 'w', newline='', encoding='utf8')
+        fields = ['title', 'rating', 'rating_count', 'src_price', 'now_price', 'fin_price',
+                  'asin', 'detail_url', 'thumbnail_url',
+                  'variant', 'first_rank', 'second_rank', 'third_rank', 'keyword']
         self.csv_writer = csv.DictWriter(self.file, fieldnames=fields)
         self.csv_writer.writeheader()
 
     def process_item(self, item, spider):
         line_dict = ItemAdapter(item).asdict()
-        logger.info(f"当前行数据：{line_dict}")
         self.csv_writer.writerow(line_dict)
         return item
 
